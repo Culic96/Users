@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
-export const FormWrapperLogin = styled.div<{isModalOpen: boolean}>({
+
+export const FormWrapperRegister = styled.div<{isModalOpen: boolean}>({
     width: '50vw',
     height: '50vh',
     display: 'flex',
