@@ -1,5 +1,4 @@
-import styled from 'styled-components'
-
+import styled from 'styled-components';
 
 export const FormWrapperRegister = styled.div<{isModalOpen: boolean}>({
     width: '50vw',
@@ -9,7 +8,10 @@ export const FormWrapperRegister = styled.div<{isModalOpen: boolean}>({
     alignItems: 'center',
     flexDirection: 'column',
     margin: "0 auto",
-    // gap: '2rem',
+    position: 'absolute',
+    left: '50%',
+    top: "50%",
+    transform: "translate(-50%, -50%)",
     backgroundColor: " #939597",
     textAlign: 'center',
     color: '#fff',

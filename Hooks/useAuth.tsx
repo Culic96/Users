@@ -68,4 +68,4 @@ const AuthProvider = (props: { children: ReactNode }): JSX.Element => {
 
 const useAuth = (): AuthContext => useContext(authContext)
 
-export { useAuth, AuthProvider }
+export { useAuth, AuthProvider}

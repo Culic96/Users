@@ -24,18 +24,18 @@ const Register:FC <{ isModalOpen: boolean; onClose: () => void }> = ({
     <>
     {isModalOpen && (
     <FormWrapperRegister isModalOpen={isModalOpen}>
-    <h2>Register User</h2>
+    <h1>Register User</h1>
       <form onSubmit={handleSubmit}>
-        <h3>Enter Username</h3>
         <label placeholder="Enter Username">
+        Enter Username
           <input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             type="text"
           />
         </label>
-        <h3>Enter Password</h3>
         <label placeholder="Enter Password">
+          Enter Password
           <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" />
         </label>
         <button type="submit">Register</button>

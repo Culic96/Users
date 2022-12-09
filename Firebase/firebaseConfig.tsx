@@ -5,6 +5,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut
 } from 'firebase/auth'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -35,5 +36,9 @@ const LoginUser = (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password)
 }
 
+const LogoutUser = () => {
+  return signOut(auth);
+}
+
 export default app
-export { LoginUser, RegisterUser, auth }
+export { LoginUser, RegisterUser, auth, LogoutUser}
