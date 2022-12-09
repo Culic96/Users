@@ -1,11 +1,16 @@
+import { AppProps } from 'next/app';
+import { AuthProvider } from '../Hooks/useAuth';
 import '../public/styles/global.css'
-// import type { AppProps } from 'next/app'
-import Index from './Index'
 
-export default function App() {
+function MyApp({ Component, pageProps }: AppProps) {
+  const AnyComponent = Component as any;
   return (
     <>
-      <Index />
+        <AuthProvider>
+          <AnyComponent {...pageProps} />
+        </AuthProvider>
     </>
-  )
+  );
 }
+
+export default MyApp;
