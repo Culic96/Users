@@ -6,6 +6,7 @@ import { useAuth } from '../Hooks/useAuth'
 import LogoutUser from '../Components/LogoutUser';
 import SecondaryBtn from '../Components/Shared/SecondaryBtn';
 import { Holder } from '../Components/LogoutUser/style';
+import Navigation from '../Components/Navigation';
 
 const Index: NextPage = () => {
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -42,6 +43,7 @@ const Index: NextPage = () => {
         {auth && (
             <>
             <LogoutUser/>
+            <Navigation/>
             </>
         )}
     </>
