@@ -8,7 +8,9 @@ import {
 } from 'firebase/firestore';
 import { useCallback, useEffect, useState } from 'react';
 import { firestore } from '../../Firebase/firebaseConfig';
+import { useAuctionsFilter } from '../../Hooks/useAuctionsFilter';
 import { useAuth } from '../../Hooks/useAuth';
+import useAuctionsService from '../../src/services/auctions.service';
 import {
     AuctionCardHolder,
     AuctionItem,
@@ -20,27 +22,39 @@ const UserAuctions = () => {
     const [userAuctions, setUserAuctions] = useState<DocumentData>([]);
     const { auth } = useAuth();
     const currUser = auth?.userId;
-    console.log('single user auctions', userAuctions);
 
-    const getUserAuctions = useCallback(async (userId: string) => {
-        const docRef = collection(firestore, 'auctions');
+    const { filters } = useAuctionsFilter();
 
-        // Create query
-        let q = query(docRef, orderBy('title', 'desc'));
-        q = query(q, where('createdBy', '==', userId));
+    // const getUserAuctions = useCallback(async (userId: string) => {
+    //     const docRef = collection(firestore, 'auctions');
 
-        const docs = await getDocs(q);
-        console.log('docs = ', docs.docs);
-        setUserAuctions(
-            docs.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
-        );
-    }, []);
+    //     // Create query
+    //     let q = query(docRef, orderBy('title', 'desc'));
+    //     q = query(q, where('createdBy', '==', userId));
+
+    //     const docs = await getDocs(q);
+    //     console.log('docs = ', docs.docs);
+    //     setUserAuctions(
+    //         docs.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
+    //     );
+    // }, []);
+
+    const { auctions, getAllAuctionsFiltered } = useAuctionsService();
 
     useEffect(() => {
-        if (currUser) {
-            getUserAuctions(currUser);
-        }
-    }, [getUserAuctions, currUser]);
+        getAllAuctionsFiltered();
+    }, [getAllAuctionsFiltered]);
+
+    useEffect(() => {
+        console.log('filtered auctions = ', auctions);
+    }, [auctions]);
+
+    // useEffect(() => {
+    //     if (currUser) {
+    //         getUserAuctions(currUser);
+    //     }
+    // }, [getUserAuctions, currUser]);
+
     return (
         <>
             <div

@@ -9,8 +9,15 @@ import {
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { firestore } from '../../Firebase/firebaseConfig';
+import {
+    AuctionsFilterOp,
+    useAuctionsFilter,
+} from '../../Hooks/useAuctionsFilter';
+import { useAuth } from '../../Hooks/useAuth';
 const Navigation = () => {
     const [userAuctions, setUserAuctions] = useState<DocumentData>([]);
+    const { setFilters } = useAuctionsFilter();
+    const { auth } = useAuth();
 
     const getUserAuctions = useCallback(async () => {
         const docRef = collection(firestore, 'auctions');
@@ -51,7 +58,21 @@ const Navigation = () => {
                 }}
             >
                 <h2>Filter auctions</h2>
-                <Button size="small" variant="contained">
+                <Button
+                    size="small"
+                    variant="contained"
+                    onClick={() => {
+                        if (auth) {
+                            setFilters([
+                                {
+                                    field: 'createdBy',
+                                    value: auth?.userId,
+                                    op: AuctionsFilterOp.Eq,
+                                },
+                            ]);
+                        }
+                    }}
+                >
                     Title
                 </Button>
                 <Link

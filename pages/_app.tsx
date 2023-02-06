@@ -1,4 +1,5 @@
 import { AppProps } from 'next/app';
+import { AuctionsFilterProvider } from '../Hooks/useAuctionsFilter';
 import { AuthProvider } from '../Hooks/useAuth';
 import '../public/styles/global.css';
 
@@ -7,7 +8,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <>
             <AuthProvider>
-                <AnyComponent {...pageProps} />
+                <AuctionsFilterProvider>
+                    <AnyComponent {...pageProps} />
+                </AuctionsFilterProvider>
             </AuthProvider>
         </>
     );
