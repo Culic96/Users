@@ -11,9 +11,11 @@ html {
 }
 
 body {
-  height: 100vh;
   width: 100vw;
+  height: 100%;
   overflow: hidden;
   font-family: "Oswald", sans-serif;
   position: relative;
+  background-color: #fff;
 }
+

@@ -1,71 +1,74 @@
 import {
-  useState,
-  useEffect,
-  createContext,
-  Context,
-  useContext,
-  ReactNode,
-} from 'react'
-import { onAuthStateChanged, signOut, User } from 'firebase/auth'
-import { auth as authorization } from '../Firebase/firebaseConfig'
+    useState,
+    useEffect,
+    createContext,
+    Context,
+    useContext,
+    ReactNode,
+} from 'react';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { auth as authorization } from '../Firebase/firebaseConfig';
 
 export interface Auth {
-  userId: string
-  email: string
+    userId: string;
+    email: string;
 }
 
 export interface AuthContext {
-  auth: Auth | null
-  logoutUser: () => Promise<void>
+    auth: Auth | null;
+    logoutUser: () => Promise<void>;
 }
 
 const authContext: Context<AuthContext> = createContext<AuthContext>({
-  auth: null,
-  logoutUser: async () => void 0,
-})
+    auth: null,
+    logoutUser: async () => void 0,
+});
 
 function useAuthProvider(): AuthContext {
-  const [auth, setAuth] = useState<Auth | null>(null)
+    const [auth, setAuth] = useState<Auth | null>(null);
 
-  useEffect(() => {
-    const unsub = onAuthStateChanged(
-      authorization,
-      async (authState: User | null) => {
-        if (!authState) {
-          return
+    useEffect(() => {
+        const unsub = onAuthStateChanged(
+            authorization,
+            async (authState: User | null) => {
+                if (!authState) {
+                    return;
+                }
+
+                setAuth({
+                    userId: authState.uid,
+                    email: authState.email!,
+                });
+            },
+        );
+        return unsub;
+    }, []);
+
+    const logoutUser = async () => {
+        try {
+            await signOut(authorization);
+            setAuth(null);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            console.log(error.message);
         }
+    };
 
-        setAuth({
-          userId: authState.uid,
-          email: authState.email!,
-        })
-      }
-    )
-    return unsub
-  }, [])
-
-  const logoutUser = async () => {
-    try {
-      await signOut(authorization)
-      setAuth(null)
-    } catch (error: any) {
-      console.log(error.message)
-    }
-  }
-
-  return {
-    auth,
-    logoutUser,
-  }
+    return {
+        auth,
+        logoutUser,
+    };
 }
 
 const AuthProvider = (props: { children: ReactNode }): JSX.Element => {
-  const auth = useAuthProvider()
-  return (
-    <authContext.Provider value={auth}>{props.children}</authContext.Provider>
-  )
-}
+    const auth = useAuthProvider();
+    return (
+        <authContext.Provider value={auth}>
+            {props.children}
+        </authContext.Provider>
+    );
+};
 
-const useAuth = (): AuthContext => useContext(authContext)
+const useAuth = (): AuthContext => useContext(authContext);
 
-export { useAuth, AuthProvider}
+export { useAuth, AuthProvider };

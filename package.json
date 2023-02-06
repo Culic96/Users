@@ -8,7 +8,13 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": "next lint --fix"
+  },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.11.6",
     "@types/node": "18.11.11",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.9",
@@ -20,10 +26,17 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^5.3.6",
-    "typescript": "4.9.4"
+    "typescript": "4.9.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
     "eslint-config-prettier": "^8.5.0",
-    "prettier": "^2.8.1"
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
+    "typescript-eslint-language-service": "^5.0.0"
   }
 }
